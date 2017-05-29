@@ -7,16 +7,11 @@ open FSharp.Data
 
 open AsyncTimer
 open TiredHandsParserManager
-
-(*
-    getBeerNamesFromTiredHands
-    |> createBeerInfoFromBeerNames 
-    |> checkIfBeerNamesChanged [ Parse JSON file -> Create old beer info -> check if things have changed ]
-    |> trySendAlert
-*)
+open Logger
 
 [<EntryPoint>]
 let main argv = 
+    initializeLogger()
     let asyncTimer = AsyncTimer(5000, getBeerInfoFromTiredHands)
 
     printfn "Starting the Timer."

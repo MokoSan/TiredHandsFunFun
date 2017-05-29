@@ -2,18 +2,22 @@
 
     open FSharp.Data
 
+    open Logger
     open BeerInfo
     open RepositoryUtilities
     open Twilio
 
+    open System
+    open System.IO
+
     [<Literal>]
     let tiredHandsUrl = "http://www.tiredhands.com/fermentaria/beers/"
-
     [<Literal>]
     let classNameOfBeers = "menu-item-title"
-
     [<Literal>]
     let tiredHandsJsonFileName = "TiredHands.json"
+    [<Literal>]
+    let logEntryPrefix = "TiredHandsParserManager: "
 
     let emptySet = Set.empty 
 
@@ -35,14 +39,20 @@
         |> Seq.toList
 
     let beerNamesChangedHandler( difference : Set<string> ) ( newBeerInfo : BeerInfo ) : unit =
-        printfn "Difference is: %A" difference
+        let messageToDisplay = logEntryPrefix + sprintf "Change in the Tired Hands Mark Up for %d beers - creating new JSON file and sending text." difference.Count 
+        printfn "%s" messageToDisplay 
+        logInfoEvent( messageToDisplay )
 
         // Write new information to the JSON file.
         serializeBeerInfo ( newBeerInfo )
         |> writeToFile tiredHandsJsonFileName 
 
+        // Send Text Via Twilio
+
     let beerNamesNotChangedHandler() : unit =
-        printfn "Nothing changed!" 
+        let messageToDisplay = logEntryPrefix + "No change in the Tired Hands Mark Up" 
+        printfn "%s" messageToDisplay 
+        logInfoEvent( messageToDisplay ) 
 
     let getLatestBeerInfo = 
         getBeerNamesFromTiredHands >> createBeerInfoFromBeerNames
