@@ -59,6 +59,7 @@
     <Compile Include="AsyncTimer.fs" />
     <Compile Include="BeerInfo.fs" />
     <Compile Include="RepositoryUtilities.fs" />
+    <Compile Include="TwilioWrapper.fs" />
     <Compile Include="TiredHandsParserManager.fs" />
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Program.fs" />

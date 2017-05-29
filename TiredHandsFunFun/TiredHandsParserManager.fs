@@ -1,14 +1,13 @@
 ﻿module TiredHandsParserManager
 
     open FSharp.Data
+    open System
+    open System.IO
 
     open Logger
     open BeerInfo
     open RepositoryUtilities
-    open Twilio
-
-    open System
-    open System.IO
+    open TwilioWrapper
 
     [<Literal>]
     let tiredHandsUrl = "http://www.tiredhands.com/fermentaria/beers/"
@@ -45,8 +44,7 @@
         // Write new information to the JSON file.
         serializeBeerInfo ( newBeerInfo )
         |> writeToFile tiredHandsJsonFileName 
-
-        // Send Text Via Twilio
+        sendTextBasedOnBeerDifference( difference ) |> ignore
 
     let beerNamesNotChangedHandler() : unit =
         let messageToDisplay = logEntryPrefix + "No change in the Tired Hands Mark Up" 

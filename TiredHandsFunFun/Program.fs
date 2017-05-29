@@ -7,6 +7,7 @@ open FSharp.Data
 
 open AsyncTimer
 open TiredHandsParserManager
+open TwilioWrapper
 open Logger
 
 [<EntryPoint>]
