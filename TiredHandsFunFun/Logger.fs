@@ -22,4 +22,5 @@
     let private logger = Logging.getCurrentLogger()
 
     let logInfoEvent ( eventDetailsToLog : string ) : unit = 
+        printfn "%s" eventDetailsToLog 
         Message.event Info eventDetailsToLog |> Logger.logSimple logger

@@ -40,7 +40,6 @@
 
     let beerNamesChangedHandler( difference : Set<string> ) ( newBeerInfo : BeerInfo ) : unit =
         let messageToDisplay = logEntryPrefix + sprintf "Change in the Tired Hands Mark Up for %d beers - creating new JSON file and sending text." difference.Count 
-        printfn "%s" messageToDisplay 
         logInfoEvent( messageToDisplay )
 
         // Write new information to the JSON file.
@@ -51,7 +50,6 @@
 
     let beerNamesNotChangedHandler() : unit =
         let messageToDisplay = logEntryPrefix + "No change in the Tired Hands Mark Up" 
-        printfn "%s" messageToDisplay 
         logInfoEvent( messageToDisplay ) 
 
     let getLatestBeerInfo = 
@@ -63,6 +61,8 @@
 
         if oldBeerInfo.IsNone then 
             writeToFile ( serializeBeerInfo newBeerInfo ) tiredHandsJsonFileName
+            let messageToDisplay = "No JSON file found - creating a new one with the latest beer selection."
+            logInfoEvent( messageToDisplay )
             ()
 
         else
